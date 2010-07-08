@@ -1,23 +1,10 @@
 #include "cinder/app/AppBasic.h"
 
+#include "Spirograph.h"
+
 using namespace ci;
 using namespace ci::app;
 using namespace std;
-
-
-//
-class Spirograph
-{
-	public:
-	
-	Spirograph(float angle, float radius)
-		: mAngle(angle), mRadius(radius), mLoc(Vec2f(getWindowWidth()/2, getWindowHeight()/2)) {}	
-	
-	float mAngle, mRadius;
-	
-	// Initial Spirograph location
-	Vec2f mLoc;
-};
 
 
 //
@@ -35,7 +22,7 @@ class SpirographApp : public AppBasic
 	//
 	Vec2f mLoc;
 	
-	Spirograph *mSpirograph;
+	SpirographPoint *mSpirograph;
 };
 
 
@@ -52,7 +39,7 @@ void SpirographApp::setup()
 {
 	mLoc = Vec2f(getWindowWidth()/2, getWindowHeight()/2);
 	
-	mSpirograph = new Spirograph(0.0f, 60.0f);
+	mSpirograph = new SpirographPoint();
 }
 
 void SpirographApp::update()
@@ -69,8 +56,11 @@ void SpirographApp::draw()
 {
 	gl::clear(Color(0, 0, 0), true);
 	
-	gl::drawSolidCircle(mLoc, 5.0f);
+	
+	mSpirograph->addPoint(mLoc);
+	mSpirograph->draw();
 }
+
 
 // Start!
 CINDER_APP_BASIC(SpirographApp, RendererGl)
