@@ -15,11 +15,15 @@ class Spirograph
 	public:
 	
 	Spirograph()
-		: mAngle(0.0f), mRadius(60.0f), mLoc(Vec2f(getWindowWidth()/2, getWindowHeight()/2)) {}
+		: mAngle(0.0f), mRadius(65.0f), mIncAngle(0.05f), mIncRadius(0.05f), mLoc(Vec2f(getWindowWidth()/2, getWindowHeight()/2)) {}
 	
-	float mAngle, mRadius;
+	Vec2f update(const Vec2f &loc);
 	
-	// Initial Spirograph location
+	
+	//
+	float mAngle, mRadius, mIncAngle, mIncRadius;
+	
+	// Spirograph location
 	Vec2f mLoc;
 };
 

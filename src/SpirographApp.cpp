@@ -20,6 +20,8 @@ class SpirographApp : public AppBasic
 	void update();
 	void draw();
 	
+	void keyDown(KeyEvent event);
+	
 	
 	//
 	Vec2f mLoc;
@@ -29,7 +31,7 @@ class SpirographApp : public AppBasic
 	// Params
 	params::InterfaceGl mParams;
 	
-	float mAngle, mRadius;
+	float mAngle, mRadius, mIncAngle;
 };
 
 
@@ -48,16 +50,22 @@ void SpirographApp::setup()
 	
 	mSpirograph = new SpirographPoint();
 	
-	// Spirograph default parameters
-	mAngle = mSpirograph->mAngle;
-	mRadius = mSpirograph->mRadius;
+	// Base Spirograph parameters
+	mAngle = 0.0f;
+	mRadius = 65.0f;
+	
+	mIncAngle = 0.02f;
 	
 	
 	// Setup the parameters
 	mParams = params::InterfaceGl("Spirograph Parameters", Vec2i(200, 400));
 	
 	mParams.addParam("Angle", &mAngle);
+	mParams.addParam("Increment Angle", &mIncAngle);
 	mParams.addParam("Radius", &mRadius);
+	mParams.addSeparator();
+	mParams.addParam("Spirograph Angle", &mSpirograph->mAngle);
+	mParams.addParam("Spirograph Radius", &mSpirograph->mRadius);
 }
 
 void SpirographApp::update()
@@ -71,13 +79,13 @@ void SpirographApp::update()
 		// (mSpirograph->mRadius * sin(mSpirograph->mAngle)) * -1; // Top
 	*/
 	
-	mAngle += 0.02;
+	mAngle += mIncAngle;
 	
-	mLoc.x = mSpirograph->mLoc.x + mRadius * cos(mAngle);
-	mLoc.y = mSpirograph->mLoc.y + mRadius * sin(mAngle);
+	mLoc.x = mSpirograph->mLoc.x + mRadius * sin(mAngle);
+	mLoc.y = mSpirograph->mLoc.y + mRadius * cos(mAngle);
 	
 	
-	mSpirograph->addPoint(mLoc);
+	mSpirograph->addPoint(mSpirograph->update(mLoc));
 }
 
 void SpirographApp::draw()
@@ -85,11 +93,24 @@ void SpirographApp::draw()
 	gl::clear(Color(0, 0, 0), true);
 	
 	
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
 	mSpirograph->draw();
+	
+	glDisable(GL_BLEND);
 	
 	
 	// Draw the interface
 	params::InterfaceGl::draw();
+}
+
+
+//
+void SpirographApp::keyDown(KeyEvent event)
+{
+	if (event.getCode() == KeyEvent::KEY_ESCAPE)
+		std::exit(0);
 }
 
 
