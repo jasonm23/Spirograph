@@ -2,6 +2,9 @@
 
 #include "cinder/params/Params.h"
 
+#include "cinder/ImageIo.h"
+#include "cinder/Utilities.h"
+
 #include "Spirograph.h"
 
 using namespace ci;
@@ -32,6 +35,9 @@ class SpirographApp : public AppBasic
 	params::InterfaceGl mParams;
 	
 	float mAngle, mRadius, mIncAngle;
+	
+	
+	bool mSaveFrames;
 };
 
 
@@ -66,6 +72,9 @@ void SpirographApp::setup()
 	mParams.addSeparator();
 	mParams.addParam("Spirograph Angle", &mSpirograph->mAngle);
 	mParams.addParam("Spirograph Radius", &mSpirograph->mRadius);
+	
+	
+	mSaveFrames = false;
 }
 
 void SpirographApp::update()
@@ -104,14 +113,22 @@ void SpirographApp::draw()
 	
 	// Draw the interface
 	params::InterfaceGl::draw();
+	
+	
+	// Save frames
+	if (mSaveFrames)
+		writeImage(getHomeDirectory() + "cinderScreenshots" + getPathSeparator() + "Spirograph_" + toString(getElapsedFrames()) + ".png", copyWindowSurface());
 }
 
 
 //
 void SpirographApp::keyDown(KeyEvent event)
 {
-	if (event.getCode() == KeyEvent::KEY_ESCAPE)
+	if (event.getCode() == KeyEvent::KEY_ESCAPE) {
 		std::exit(0);
+	} else if (event.getChar() == 's' || event.getChar() == 'S') {
+		mSaveFrames = !mSaveFrames;
+	}
 }
 
 

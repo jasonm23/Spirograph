@@ -1,0 +1,18 @@
+= Spirograph (a bit psychedelic)
+
+Geometric drawing using cinder and Params.h class.
+
+
+== Description
+
+Spirograph produces mathematical curves of the variety technically known as hypotrochoids and epitrochoids.
+
+* http://en.wikipedia.org/wiki/Hypotrochoid
+
+* http://en.wikipedia.org/wiki/Epitrochoid
+
+	
+	
+== Questions, suggestions, bug reports...
+
+Feedback, questions and comments will be always welcome at <af [at] aitorfernandez.com>
