@@ -64,7 +64,7 @@ void SpirographApp::setup()
 	
 	
 	// Setup the parameters
-	mParams = params::InterfaceGl("Spirograph Parameters", Vec2i(200, 400));
+	mParams = params::InterfaceGl("Spirograph Parameters", Vec2i(100, 200));
 	
 	mParams.addParam("Angle", &mAngle);
 	mParams.addParam("Increment Angle", &mIncAngle);
@@ -75,6 +75,15 @@ void SpirographApp::setup()
 	
 	
 	mSaveFrames = false;
+	
+	
+	// Opengl blending
+	glEnable(GL_BLEND);
+	
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
+	glEnable(GL_POLYGON_SMOOTH);
+	glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST); // GL_FASTEST	
 }
 
 void SpirographApp::update()
@@ -99,21 +108,17 @@ void SpirographApp::update()
 
 void SpirographApp::draw()
 {
-	gl::clear(Color(0, 0, 0), true);
+	gl::clear(Color(0.1f, 0.1f, 0.1f), true);
 	
-	
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_LINE_SMOOTH);
 	
 	mSpirograph->draw();
+		
 	
-	glDisable(GL_BLEND);
-	
-	
-	// Draw the interface
-	params::InterfaceGl::draw();
-	
+	if (!mSaveFrames)
+	{
+		// Draw the interface
+		params::InterfaceGl::draw();
+	}
 	
 	// Save frames
 	if (mSaveFrames)

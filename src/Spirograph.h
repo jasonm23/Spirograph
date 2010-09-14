@@ -24,7 +24,7 @@ class Spirograph
 	float mAngle, mRadius, mIncAngle, mIncRadius;
 	
 	// Spirograph location
-	Vec2f mLoc;
+	Vec2f mLoc;	
 };
 
 

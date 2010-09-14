@@ -1,6 +1,6 @@
 = Spirograph (a bit psychedelic)
 
-Geometric drawing using cinder and Params.h class.
+Geometric drawing using Cinder (http://libcinder.org) and Params.h class.
 
 
 == Description

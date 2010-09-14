@@ -15,11 +15,10 @@ void SpirographPoint::draw()
 {
 	for (list<Vec2f>::iterator pointIt = mPoints.begin(); pointIt != mPoints.end(); ++pointIt)
 	{
-		// Mix colors and ...
-		glColor4f(cos(pointIt->x), sin(pointIt->y), app::getElapsedSeconds() * 0.1f, Rand::randFloat());
+		// Mix colors :p
+		glColor4f(cos(pointIt->x), sin(pointIt->y), sin(app::getElapsedSeconds()) * 0.1f, Rand::randFloat());
 		
-		// ... Radius chaos :p
-		gl::drawSolidCircle(*pointIt, Rand::randFloat(abs(-(cos(pointIt->x) * Rand::randFloat(mRadius))) / 10));
+		gl::drawSolidCircle(*pointIt, Rand::randFloat(abs(-(cos(pointIt->x) * Rand::randFloat(mRadius))) / 7.5f));
 	}
 }
 
